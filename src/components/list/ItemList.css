@@ -1,0 +1,21 @@
+.item-list-container {
+    margin-top: 90px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item-list-container p {
+    min-width: 450px;
+    max-width: 950px;
+    width: 75%;
+
+    margin: 0 0 25px 0;
+
+    color: #b1b1b1;
+
+    font-size: 30px;
+    font-weight: lighter;
+    font-family: 'Open Sans', sans-serif;
+}

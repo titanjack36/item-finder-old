@@ -1,0 +1,22 @@
+.no-match-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    height: 100vh;
+
+    color: #C5C5C5;
+}
+
+.no-match-container .search-icon {
+    font-size: 64px;
+    margin: 0 0 20px 0;
+}
+
+h2 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    margin: 0;
+}

@@ -1,0 +1,129 @@
+.title {
+    margin: 0 20px;
+
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+
+    color: rgb(114, 114, 114);
+}
+
+.left {
+    min-width: 500px;
+    width: 40%;
+    max-width: 600px;
+
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.right {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.divider {
+    width: 0px;
+    height: 64px;
+
+    border: 0.6px solid #f5f7fb;
+
+    background-color: #f5f7fb;
+}
+
+.bars-icon {
+    font-size: 19px;
+}
+
+.add-item-icon {
+    font-size: 18px;
+    color: #a1a1a1;
+}
+
+.menu-button.open-search {
+    display: none;
+}
+
+.menu-button {
+    width: 45px;
+    height: 45px;
+
+    margin: 0 10px;
+
+    color: #c9c9c9;
+    background-color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 6px;
+
+    -o-transition:.2s;
+    -ms-transition:.2s;
+    -moz-transition:.2s;
+    -webkit-transition:.2s;
+    transition:.2s;
+}
+
+.menu-button:hover {
+    color: #bdbdbd;
+
+    -webkit-box-shadow: 0px 5px 15px -1px rgba(0,0,0,0.37); 
+    box-shadow: 0px 5px 15px -1px rgba(0,0,0,0.1);
+
+    cursor: pointer;
+}
+
+.menu-button:active {
+    color: #a6a6a6;
+    background-color: #f5f5f5;
+
+    -webkit-box-shadow: 0px 5px 15px -5px rgba(0,0,0,0.37); 
+    box-shadow: 0px 5px 15px -5px rgba(0,0,0,0.1);
+}
+
+.menu-button:focus {
+    outline: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .menu-content {
+        flex-wrap: wrap;
+    }
+
+    .divider.desktop {
+        display: none;
+    }
+
+    .left {
+        min-width: 100px;
+        
+        flex: 1;
+    }
+    
+    .menu-button.open-search {
+        display: initial;
+    }
+
+    .appbar-search-icon {
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+
+    .title {
+        margin: 0 10px;
+    }
+
+    .menu-button.open-search {
+        margin: 0 5px 0 10px;
+    }
+
+    .menu-button.add-item {
+        margin: 0 10px 0 5px;
+    }
+}

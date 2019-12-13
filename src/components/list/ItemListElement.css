@@ -1,0 +1,40 @@
+/*.list-item-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: none;
+}*/
+
+.table-row {
+    -o-transition:.2s;
+    -ms-transition:.2s;
+    -moz-transition:.2s;
+    -webkit-transition:.2s;
+    transition:.2s;
+}
+
+.table-row:hover {
+    background-color: #eeeeee;
+}
+
+.icon {
+    font-size: 15px;
+    color: #fefefe;
+}
+
+.table-row:hover .icon {
+    font-size: 15px;
+    color: #aaaaaa;
+}
+
+.pin-icon {
+    font-size: 15px;
+}
+
+.edit-icon {
+    font-size: 15px;
+}
+
+.trash-icon {
+    font-size: 15px;
+}
