@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Modal from '@material-ui/core/Modal';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Fade from '@material-ui/core/Fade';
 
 import './EditItemModal.css';
 
@@ -34,48 +34,65 @@ const styles = themes => ({
 });
 
 class EditItemModal extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = { openModal: false };
   }
 
-    handleModalOpen = item => {
-      if (item !== undefined) {
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyDown);
+  }
 
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyDown);
+  }
+
+  handleKeyDown = event => {
+    const ESCAPE_KEY = 27;
+
+    if (event.keyCode !== undefined) {
+      switch (event.keyCode) {
+        case ESCAPE_KEY:
+          this.handleModalClose();
+          break;
+
+        default:
+          break;
       }
-      this.setState({ openModal: true });
     }
+  }
 
-    handleModalClose = () => {
+  isModalOpen = () => {
+    return this.state.openModal;
+  }
+
+  handleModalOpen = item => {
+    if (item !== undefined) {
+
+    }
+    this.setState({ openModal: true });
+  }
+
+  handleModalClose = () => {
+    if (this.state.openModal) {
       this.setState({ openModal: false });
+      setTimeout(this.props.onPopoverClose, 200);
     }
+  }
 
-    render () {
-      const { classes } = this.props;
-      return (
-        <Modal
-          aria-labelledby="edit-item-modal"
-          aria-describedby="edit-item-attributes"
-          open={this.state.openModal}
-          onClose={this.handleClose}
-          className={classes.modal}
-          BackdropProps={{
-            style: {
-              backgroundColor: 'rgba(114, 114, 114, 0.1)'
-            }
-          }}
-          onEscapeKeyDown={this.handleModalClose}
-        >
-          <div className={classes.paper}>
-            <h2 id="simple-modal-title">Text in a modal</h2>
-            <p id="simple-modal-description">
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </p>
+  render() {
+    const { classes } = this.props;
+    return (
+      <Fade in={this.state.openModal}>
+        <div className="modal-backdrop">
+          <div className="modal">
+
           </div>
-        </Modal>
-      );
-    }
+        </div>
+      </Fade>
+    );
+  }
 }
 
 EditItemModal.propTypes = {

@@ -35,14 +35,14 @@ const styles = themes => ({
 });
 
 class AddItemPopover extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.editItemModal = React.createRef();
 
-    this.state = { 
-      openPopover: false, 
-      itemNameValue: '', 
+    this.state = {
+      openPopover: false,
+      itemNameValue: '',
       itemLocValue: '',
       itemNameFieldError: false,
       itemLocFieldError: false
@@ -76,15 +76,19 @@ class AddItemPopover extends React.Component {
     }
   }
 
-  handlePopoverOpen = event => {
+  handlePopoverOpen = () => {
     this.setState({ openPopover: true });
   }
 
   handlePopoverClose = () => {
-    if (this.state.openPopover === true) {
+    if (
+      (this.editItemModal.current &&
+        !this.editItemModal.current.isModalOpen()) &&
+      this.state.openPopover === true
+    ) {
       this.setState({
         openPopover: false,
-        itemNameValue: '', 
+        itemNameValue: '',
         itemLocValue: '',
         itemNameFieldError: false,
         itemLocFieldError: false
@@ -95,14 +99,14 @@ class AddItemPopover extends React.Component {
   handleItemNameFieldChange = event => {
     this.setState({ itemNameValue: event.target.value });
     if (this.state.itemNameFieldError) {
-      this.setState({itemNameFieldError: false});
+      this.setState({ itemNameFieldError: false });
     }
   }
 
   handleItemLocFieldChange = event => {
     this.setState({ itemLocValue: event.target.value });
     if (this.state.itemLocFieldError) {
-      this.setState({itemLocFieldError: false});
+      this.setState({ itemLocFieldError: false });
     }
   }
 
@@ -115,12 +119,12 @@ class AddItemPopover extends React.Component {
       let error = false;
 
       if (this.state.itemNameValue.length === 0) {
-        this.setState({itemNameFieldError: true});
+        this.setState({ itemNameFieldError: true });
         error = true;
       }
 
       if (this.state.itemLocValue.length === 0) {
-        this.setState({itemLocFieldError: true});
+        this.setState({ itemLocFieldError: true });
         error = true;
       }
 
@@ -136,7 +140,7 @@ class AddItemPopover extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const { classes } = this.props;
     return (
       <Slide
@@ -165,7 +169,7 @@ class AddItemPopover extends React.Component {
                 onChange={this.handleItemNameFieldChange}
                 error={this.state.itemNameFieldError}
                 helperText={(
-                  this.state.itemNameFieldError ? 
+                  this.state.itemNameFieldError ?
                     "Item name field cannot be empty" : ""
                 )}
               />
@@ -179,13 +183,13 @@ class AddItemPopover extends React.Component {
                 onChange={this.handleItemLocFieldChange}
                 error={this.state.itemLocFieldError}
                 helperText={(
-                  this.state.itemLocFieldError ? 
+                  this.state.itemLocFieldError ?
                     "Item location field cannot be empty" : ""
                 )}
               />
             </div>
             <div className="button-group">
-              <IconButton 
+              <IconButton
                 className={classes.closePopoverButton}
                 onClick={this.handlePopoverClose}
               >
@@ -213,6 +217,7 @@ class AddItemPopover extends React.Component {
             </div>
             <EditItemModal
               ref={this.editItemModal}
+              onPopoverClose={this.handlePopoverClose}
             />
           </div>
         </div>
