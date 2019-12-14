@@ -151,11 +151,11 @@ class AddItemPopover extends React.Component {
       >
         <div
           className="popover-backdrop"
-          onClick={this.handlePopoverClose}
+          onMouseDown={this.handlePopoverClose}
         >
           <div
             className="popover"
-            onClick={e => e.stopPropagation()}
+            onMouseDown={e => e.stopPropagation()}
           >
             <div className="textfield-group">
               <p className="popover-title">New Item</p>

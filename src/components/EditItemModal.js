@@ -2,34 +2,21 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 import Fade from '@material-ui/core/Fade';
 
 import './EditItemModal.css';
 
 const styles = themes => ({
-  modal: {
-    oTransition: '1s',
-    msTransition: '1s',
-    mozTransition: '1s',
-    webkitTransition: '1s',
-    transition: '1s'
+  textField: {
+    height: '100px',
+    width: '50%'
   },
-  paper: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-
-    backgroundColor: '#ffffff',
-    borderRadius: '10px',
-    outline: 'none',
-
-    webkitBoxShadow: '0px 5px 15px -1px rgba(0,0,0,0.37)',
-    boxShadow: '0px 5px 15px -1px rgba(0,0,0,0.1)',
-
-    width: '600px',
-    height: '400px'
+  labelRoot: {
+    fontSize: '30px'
+  },
+  labelFocused: {
+    fontSize: '20px'
   }
 });
 
@@ -37,6 +24,7 @@ class EditItemModal extends React.Component {
   constructor(props) {
     super(props);
 
+    this.itemNameTextField = React.createRef();
     this.state = { openModal: false };
   }
 
@@ -70,6 +58,10 @@ class EditItemModal extends React.Component {
   handleModalOpen = item => {
     if (item !== undefined) {
 
+    } else {
+      setTimeout(() => {
+        this.itemNameTextField.current.focus();
+      }, 200);
     }
     this.setState({ openModal: true });
   }
@@ -87,8 +79,33 @@ class EditItemModal extends React.Component {
       <Fade in={this.state.openModal}>
         <div className="modal-backdrop">
           <div className="modal">
-
-          </div>
+            <p className="textfield-label">
+              Item Name
+            </p>
+            <input
+              ref={this.itemNameTextField}
+              className="textfield item-name"
+              type="text"
+            />
+            <p className="textfield-label">
+              Item Location
+            </p>
+            <input
+              ref={this.itemLocTextField}
+              className="textfield item-loc"
+              type="text"
+            />
+            <p className="textfield-label">
+              Item Tags
+            </p>
+            <div className="item-tags-container">
+              <input
+                ref={this.itemLocTextField}
+                className="textfield item-tag"
+                type="text"
+              />
+            </div>
+          </div>=
         </div>
       </Fade>
     );
