@@ -1,0 +1,24 @@
+.modal-textfield {
+    height: 35px;
+    width: 50%;
+    padding: 0 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+
+    display: block;
+
+    font-size: 18px;
+    
+    background-color: #eeeeee;
+
+    -o-transition:.2s;
+    -ms-transition:.2s;
+    -moz-transition:.2s;
+    -webkit-transition:.2s;
+    transition:.2s;
+}

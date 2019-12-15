@@ -1,8 +1,7 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
+
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import Fade from '@material-ui/core/Fade';
 
 import './EditItemModal.css';
@@ -82,30 +81,32 @@ class EditItemModal extends React.Component {
             <p className="textfield-label">
               Item Name
             </p>
-            <input
+            <div
               ref={this.itemNameTextField}
               className="textfield item-name"
-              type="text"
-            />
+            >
+              <input type="text" />
+            </div>
             <p className="textfield-label">
               Item Location
             </p>
-            <input
+            <div
               ref={this.itemLocTextField}
               className="textfield item-loc"
-              type="text"
-            />
+            >
+            </div>
             <p className="textfield-label">
               Item Tags
             </p>
             <div className="item-tags-container">
-              <input
+              <div
                 ref={this.itemLocTextField}
                 className="textfield item-tag"
                 type="text"
-              />
+              >
+              </div>
             </div>
-          </div>=
+          </div>
         </div>
       </Fade>
     );

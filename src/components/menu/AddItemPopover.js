@@ -10,7 +10,7 @@ import { withStyles } from '@material-ui/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import EditItemModal from '../EditItemModal';
+import EditItemModal from '../modal/EditItemModal';
 
 import './AddItemPopover.css';
 
