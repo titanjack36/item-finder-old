@@ -10,7 +10,8 @@
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
 
-    display: block;
+    display: flex;
+    align-items: center;
 
     font-size: 18px;
     
@@ -21,4 +22,21 @@
     -moz-transition:.2s;
     -webkit-transition:.2s;
     transition:.2s;
+}
+
+.modal-textfield:hover {
+    background-color: #e5e5e5;
+}
+
+.modal-textfield > input {
+    background: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
+
+    font-size: 18px;
+}
+
+.modal-textfield > input:focus {
+    outline: none;
 }

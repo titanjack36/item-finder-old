@@ -4,19 +4,23 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
+
+import ModalTextfield from './ModalTextfield';
+
 import './EditItemModal.css';
+import { IconButton } from '@material-ui/core';
 
 const styles = themes => ({
-  textField: {
-    height: '100px',
-    width: '50%'
+  closeButton: {
+    width: '35px',
+    height: '35px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 'none'
   },
-  labelRoot: {
-    fontSize: '30px'
-  },
-  labelFocused: {
-    fontSize: '20px'
-  }
 });
 
 class EditItemModal extends React.Component {
@@ -59,7 +63,8 @@ class EditItemModal extends React.Component {
 
     } else {
       setTimeout(() => {
-        this.itemNameTextField.current.focus();
+        this.itemNameTextField.current.
+          getTextfieldInputRef().current.focus();
       }, 200);
     }
     this.setState({ openModal: true });
@@ -81,31 +86,48 @@ class EditItemModal extends React.Component {
             <p className="textfield-label">
               Item Name
             </p>
-            <div
+            <ModalTextfield
               ref={this.itemNameTextField}
-              className="textfield item-name"
+              textFieldProps={{ style: {
+                height: '50px',
+                width: '75%',
+              }}}
+              inputProps={{ style: {
+                fontSize: '25px',
+              }}}
             >
-              <input type="text" />
-            </div>
+              <FontAwesomeIcon
+                className="pencil-icon"
+                icon={faPencilAlt}
+              />
+            </ModalTextfield>
             <p className="textfield-label">
               Item Location
             </p>
-            <div
-              ref={this.itemLocTextField}
-              className="textfield item-loc"
-            >
-            </div>
+            <ModalTextfield>
+              <FontAwesomeIcon
+                className="pencil-icon"
+                icon={faPencilAlt}
+              />
+            </ModalTextfield>
             <p className="textfield-label">
               Item Tags
             </p>
-            <div className="item-tags-container">
-              <div
-                ref={this.itemLocTextField}
-                className="textfield item-tag"
-                type="text"
+            <ModalTextfield
+              textFieldProps={{ style: {
+                width: '150px',
+                marginRight: '10px'
+              }}}
+            >
+              <IconButton 
+                className={classes.closeButton}
               >
-              </div>
-            </div>
+                <FontAwesomeIcon
+                  className="close-icon"
+                  icon={faTimes}
+                />
+              </IconButton>
+            </ModalTextfield>
           </div>
         </div>
       </Fade>

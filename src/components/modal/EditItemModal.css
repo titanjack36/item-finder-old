@@ -26,6 +26,7 @@
 
 .textfield-label {
     margin: 0 5px 5px 0;
+    color: #a0a0a0;
 }
 
 .textfield {
@@ -91,4 +92,8 @@
 .item-tags-container {
     display: flex;
     flex-direction: row;
+}
+
+.close-icon {
+    color: #c9c9c9;
 }
