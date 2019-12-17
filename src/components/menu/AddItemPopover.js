@@ -111,7 +111,12 @@ class AddItemPopover extends React.Component {
   }
 
   handleAdvancedButtonClick = () => {
-    this.editItemModal.current.handleModalOpen();
+    this.editItemModal.current.handleModalOpen({
+      key: null,
+      name: this.state.itemNameValue,
+      location: this.state.itemLocValue,
+      tags: []
+    });
   }
 
   handleSaveAndClose = () => {
@@ -129,15 +134,18 @@ class AddItemPopover extends React.Component {
       }
 
       if (!error) {
-        this.props.onNewItemCreated(
-          {
+        this.props.onNewItemCreated({
             name: this.state.itemNameValue,
-            location: this.state.itemLocValue
-          }
-        );
+            location: this.state.itemLocValue,
+            tags: []
+        });
         this.handlePopoverClose();
       }
     }
+  }
+
+  handleModalFormSubmit = item => {
+    this.props.onNewItemCreated(item);
   }
 
   render() {
@@ -218,6 +226,9 @@ class AddItemPopover extends React.Component {
             <EditItemModal
               ref={this.editItemModal}
               onPopoverClose={this.handlePopoverClose}
+              onModalFormSubmit={
+                this.handleModalFormSubmit
+              }
             />
           </div>
         </div>

@@ -9,6 +9,8 @@ import { withStyles } from '@material-ui/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 
+import EditItemModal from '../modal/EditItemModal';
+
 import './ItemListElement.css';
 
 const styles = themes => ({
@@ -32,11 +34,18 @@ class ItemListElement extends React.Component {
   constructor (props) {
     super(props);
 
+    this.editItemModal = React.createRef();
     this.state = {};
   }
 
   handleDeleteButtonClick = () => {
     this.props.onDeleteItem(this.props.item.key);
+  }
+
+  handleEditButtonClick = () => {
+    this.editItemModal.current.handleModalOpen(
+      this.props.item
+    );
   }
 
   render () {
@@ -70,7 +79,10 @@ class ItemListElement extends React.Component {
               icon={faThumbtack}
             />
           </IconButton>
-          <IconButton className={classes.actionButton}>
+          <IconButton 
+            className={classes.actionButton}
+            onClick={this.handleEditButtonClick}
+          >
             <FontAwesomeIcon
               className="icon"
               icon={faEdit}
@@ -85,6 +97,12 @@ class ItemListElement extends React.Component {
               icon={faTrash}
             />
           </IconButton>
+          <EditItemModal
+            ref={this.editItemModal}
+            onModalFormSubmit={
+              this.props.onEditItem
+            }
+          />
         </TableCell>
       </TableRow>
     );

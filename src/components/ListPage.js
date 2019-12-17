@@ -21,74 +21,82 @@ export default class ListPage extends React.Component {
     this.nextKey = 1;
   }
 
-    addItem = (newItemProperties) => {
-      const itemList = this.state.items;
-      const nextItem = {
-        key: this.nextKey,
-        name: newItemProperties.name,
-        location: newItemProperties.location,
-        tags: []
-      };
-      const targetIndex =
-            binarySearchInsertion(itemList, nextItem.name);
-      itemList.splice(targetIndex, 0, nextItem);
+  addItem = (newItemProperties) => {
+    const itemList = this.state.items;
+    const nextItem = {
+      key: this.nextKey,
+      name: newItemProperties.name,
+      location: newItemProperties.location,
+      tags: newItemProperties.tags
+    };
+    const targetIndex =
+          binarySearchInsertion(itemList, nextItem.name);
+    itemList.splice(targetIndex, 0, nextItem);
 
-      this.setState({
-        items: itemList
-      });
-      this.nextKey++;
-      this.filterItemList(this.state.filterText);
-    }
+    this.setState({
+      items: itemList
+    });
+    this.nextKey++;
+    this.filterItemList(this.state.filterText);
+  }
 
-    searchItem = searchText => {
-      this.filterItemList(searchText);
-    }
+  searchItem = searchText => {
+    this.filterItemList(searchText);
+  }
 
-    deleteItem = itemKey => {
-      const itemList = this.state.items;
-      for (let i = 0; i < itemList.length; i++) {
-        if (itemList[i].key === itemKey) {
-          itemList.splice(i, 1);
-        }
-      }
-      this.setState({
-        items: itemList
-      });
-      this.filterItemList(this.state.filterText);
-    }
+  deleteItem = itemKey => {
+    this.setState(state => ({
+      items: state.items.filter(listItem => 
+          listItem.key !== itemKey
+        )
+    }));
+    this.filterItemList(this.state.filterText);
+  }
 
-    filterItemList = filterText => {
-      if (filterText !== undefined && filterText.length > 0) {
-        const filteredItemList = this.state.items.filter(
-          item => item.name.includes(filterText)
-        );
-        this.setState({
-          filteredItems: filteredItemList,
-          filterText: filterText
-        });
-      } else {
-        this.setState({
-          filteredItems: this.state.items,
-          filterText: ''
-        });
+  editItem = item => {
+    let itemList = this.state.items;
+    for (let i = 0; i < itemList.length; i++) {
+      if (itemList[i].key === item.key) {
+        itemList[i] = item;
       }
     }
+    this.setState({items: itemList});
+    this.filterItemList(this.state.filterText);
+  }
 
-    render () {
-      return (
-        <div className="main-container">
-          <MainMenu
-            onSearchItem={this.searchItem}
-            onNewItemCreated={this.addItem}
-          />
-          <ItemList
-            items={this.state.filteredItems}
-            totalItemAmt={this.state.items.length}
-            onDeleteItem={this.deleteItem}
-          />
-        </div>
+  filterItemList = filterText => {
+    if (filterText !== undefined && filterText.length > 0) {
+      const filteredItemList = this.state.items.filter(
+        item => item.name.includes(filterText)
       );
+      this.setState({
+        filteredItems: filteredItemList,
+        filterText: filterText
+      });
+    } else {
+      this.setState({
+        filteredItems: this.state.items,
+        filterText: ''
+      });
     }
+  }
+
+  render () {
+    return (
+      <div className="main-container">
+        <MainMenu
+          onSearchItem={this.searchItem}
+          onNewItemCreated={this.addItem}
+        />
+        <ItemList
+          items={this.state.filteredItems}
+          totalItemAmt={this.state.items.length}
+          onDeleteItem={this.deleteItem}
+          onEditItem={this.editItem}
+        />
+      </div>
+    );
+  }
 }
 
 function binarySearchInsertion (itemList, itemName) {

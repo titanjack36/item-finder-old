@@ -4,30 +4,19 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
-
-import ModalTextfield from './ModalTextfield';
+import ModalFormGroup from './ModalFormGroup';
 
 import './EditItemModal.css';
-import { IconButton } from '@material-ui/core';
 
 const styles = themes => ({
-  closeButton: {
-    width: '35px',
-    height: '35px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 'none'
-  },
+
 });
 
 class EditItemModal extends React.Component {
   constructor(props) {
     super(props);
 
-    this.itemNameTextField = React.createRef();
+    this.modalFormGroup = React.createRef();
     this.state = { openModal: false };
   }
 
@@ -59,21 +48,28 @@ class EditItemModal extends React.Component {
   }
 
   handleModalOpen = item => {
-    if (item !== undefined) {
+    this.modalFormGroup.current
+      .setUpModalItemForm(item);
 
-    } else {
-      setTimeout(() => {
-        this.itemNameTextField.current.
-          getTextfieldInputRef().current.focus();
-      }, 200);
-    }
     this.setState({ openModal: true });
   }
 
   handleModalClose = () => {
     if (this.state.openModal) {
       this.setState({ openModal: false });
-      setTimeout(this.props.onPopoverClose, 200);
+      if (this.props.onPopoverClose !== undefined) {
+        setTimeout(this.props.onPopoverClose, 200);
+      }
+    }
+  }
+
+  handleModalFormSubmit = () => {
+    let item = this.modalFormGroup.current
+      .handleModalFormSubmit();
+
+    if (item !== null) {
+      this.props.onModalFormSubmit(item);
+      this.handleModalClose();
     }
   }
 
@@ -83,51 +79,23 @@ class EditItemModal extends React.Component {
       <Fade in={this.state.openModal}>
         <div className="modal-backdrop">
           <div className="modal">
-            <p className="textfield-label">
-              Item Name
-            </p>
-            <ModalTextfield
-              ref={this.itemNameTextField}
-              textFieldProps={{ style: {
-                height: '50px',
-                width: '75%',
-              }}}
-              inputProps={{ style: {
-                fontSize: '25px',
-              }}}
-            >
-              <FontAwesomeIcon
-                className="pencil-icon"
-                icon={faPencilAlt}
-              />
-            </ModalTextfield>
-            <p className="textfield-label">
-              Item Location
-            </p>
-            <ModalTextfield>
-              <FontAwesomeIcon
-                className="pencil-icon"
-                icon={faPencilAlt}
-              />
-            </ModalTextfield>
-            <p className="textfield-label">
-              Item Tags
-            </p>
-            <ModalTextfield
-              textFieldProps={{ style: {
-                width: '150px',
-                marginRight: '10px'
-              }}}
-            >
-              <IconButton 
-                className={classes.closeButton}
+            <ModalFormGroup 
+              ref={this.modalFormGroup}
+            />
+            <div className="modal-button-group">
+              <button
+                className="modal-button done"
+                onClick={this.handleModalFormSubmit}
               >
-                <FontAwesomeIcon
-                  className="close-icon"
-                  icon={faTimes}
-                />
-              </IconButton>
-            </ModalTextfield>
+                Done
+              </button>
+              <button
+                className="modal-button cancel"
+                onClick={this.handleModalClose}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </Fade>

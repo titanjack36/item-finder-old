@@ -1,0 +1,31 @@
+.modal-form-group {
+    height: 90%;
+    overflow-y: auto;
+}
+
+.modal-textfield-label {
+    margin: 0 5px 5px 0;
+    color: #a0a0a0;
+    font-size: 16px;
+    text-align: left;
+}
+
+.item-tags-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.pencil-icon {
+    color: #c9c9c9;
+}
+
+.close-icon {
+    color: #c9c9c9;
+    font-size: 20px;
+}
+
+.add-tag-icon {
+    color: #bbbbbb;
+    font-size: 20px;
+}

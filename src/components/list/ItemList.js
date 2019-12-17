@@ -49,12 +49,12 @@ class ItemList extends React.Component {
     } else {
       return (
         <div className="item-list-container">
-          <p>My Home</p>
+          <p className="list-title">My Home</p>
           <Paper className={classes.root}>
             <Table>
               <caption>
                 <center>
-                                End of list, showing&nbsp;
+                  End of list, showing&nbsp;
                   {this.props.items.length} of&nbsp;
                   {this.props.totalItemAmt} item(s).
                 </center>
@@ -72,8 +72,12 @@ class ItemList extends React.Component {
                   this.props.items.map(item =>
                     <ItemListElement key={item.key}
                       item={item}
-                      onDeleteItem=
-                        {this.props.onDeleteItem}
+                      onDeleteItem={
+                        this.props.onDeleteItem
+                      }
+                      onEditItem={
+                        this.props.onEditItem
+                      }
                     />
                   )
                 }

@@ -6,7 +6,7 @@
     align-items: center;
 }
 
-.item-list-container p {
+.item-list-container > .list-title {
     min-width: 450px;
     max-width: 950px;
     width: 75%;

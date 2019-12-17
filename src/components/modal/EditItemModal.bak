@@ -1,0 +1,220 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import { withStyles } from '@material-ui/core/styles';
+import Fade from '@material-ui/core/Fade';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt, faTimes, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+
+import ModalTextfield from './ModalTextfield';
+
+import './EditItemModal.css';
+import { IconButton } from '@material-ui/core';
+
+const styles = themes => ({
+  closeButton: {
+    width: '35px',
+    height: '35px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '0px'
+  },
+  addTagButton: {
+    width: '35px',
+    height: '35px',
+    padding: '0px'
+  }
+});
+
+class EditItemModal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.nextTagKey = 0;
+    this.itemNameTextField = React.createRef();
+    this.state = { 
+      openModal: false,
+      itemId: null,
+      itemName: '',
+      itemLoc: '',
+      itemTags: []
+    };
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyDown);
+  }
+
+  clearModalItemValues = () => {
+    this.setState({
+      itemId: null,
+      itemName: '',
+      itemLoc: '',
+      itemTags: []
+    });
+  }
+
+  handleKeyDown = event => {
+    const ESCAPE_KEY = 27;
+
+    if (event.keyCode !== undefined) {
+      switch (event.keyCode) {
+        case ESCAPE_KEY:
+          this.handleModalClose();
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
+
+  isModalOpen = () => {
+    return this.state.openModal;
+  }
+
+  getNextTagKey = (tags) => {
+    if (tags === undefined || tags.length === 0) {
+      return 0;
+    } else {
+      return tags[tags.length - 1];
+    }
+  }
+
+  handleModalOpen = item => {
+    if (item !== undefined) {
+      this.setState({
+        itemId: item.key,
+        itemName: item.name,
+        itemLoc: item.location,
+        itemTags: item.tags
+      });
+      this.nextTagKey = this.getNextTagKey(item.tags);
+    } else {
+      this.clearModalItemValues();
+    }
+
+    setTimeout(() => {
+      this.itemNameTextField.current
+        .getTextfieldInputRef().current.focus();
+    }, 200);
+    this.setState({ openModal: true });
+  }
+
+  handleModalClose = () => {
+    if (this.state.openModal) {
+      this.setState({ openModal: false });
+      setTimeout(this.props.onPopoverClose, 200);
+    }
+  }
+
+  handleAddTag = () => {
+    let tags = this.state.itemTags;
+    tags.push({key: this.nextTagKey, value: ''});
+    this.setState({itemTags: tags});
+    this.nextTagKey++;
+  }
+
+  handleDeleteTag = index => {
+    let tags = this.state.itemTags;
+    tags.splice(index, 1);
+    this.setState({itemTags: tags});
+  }
+
+  handleItemTagFieldChange = (index, event) => {
+    let tags = this.state.itemTags;
+    tags[index].value = event.target.value;
+    this.setState({itemTags: tags});
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <Fade in={this.state.openModal}>
+        <div className="modal-backdrop">
+          <div className="modal">
+            <p className="textfield-label">
+              Item Name
+            </p>
+            <ModalTextfield
+              ref={this.itemNameTextField}
+              textFieldProps={{ style: {
+                height: '50px',
+                width: '75%',
+              }}}
+              inputProps={{ style: {
+                fontSize: '25px',
+              }}}
+            >
+              <FontAwesomeIcon
+                className="pencil-icon"
+                icon={faPencilAlt}
+              />
+            </ModalTextfield>
+            <p className="textfield-label">
+              Item Location
+            </p>
+            <ModalTextfield>
+              <FontAwesomeIcon
+                className="pencil-icon"
+                icon={faPencilAlt}
+              />
+            </ModalTextfield>
+            <p className="textfield-label">
+              Item Tags
+            </p>
+            <div className="item-tags-container">
+              {
+                this.state.itemTags.map((tag, index) =>
+                  <ModalTextfield
+                    key={tag.key}
+                    textFieldProps={{ style: {
+                      width: '150px',
+                      marginRight: '10px',
+                      paddingRight: '0px'
+                    }}}
+                    value={tag.value}
+                    onChange={event => 
+                      this.handleItemTagFieldChange(index, event)
+                    }
+                  >
+                    <IconButton 
+                      className={classes.closeButton}
+                      onClick={() => this.handleDeleteTag(index)}
+                    >
+                      <FontAwesomeIcon
+                        className="close-icon"
+                        icon={faTimes}
+                      />
+                    </IconButton>
+                  </ModalTextfield>
+                )
+              }
+              <IconButton
+                className={classes.addTagButton}
+                onClick={this.handleAddTag}
+              >
+                <FontAwesomeIcon
+                  className="add-tag-icon"
+                  icon={faPlusCircle}
+                />
+              </IconButton>
+            </div>
+          </div>
+        </div>
+      </Fade>
+    );
+  }
+}
+
+EditItemModal.propTypes = {
+  classes: PropTypes.object
+};
+
+export default withStyles(styles)(EditItemModal);

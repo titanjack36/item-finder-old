@@ -19,6 +19,9 @@ export default class ModalTextfield extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+  }
+
   getTextfieldInputRef = () => {
     return this.modalInput;
   }
@@ -35,16 +38,25 @@ export default class ModalTextfield extends React.Component {
   }
 
   handleInputFocusOut = () => {
+    this.resetStyles();
+  }
+
+  resetStyles = () => {
     this.setState({
       textfieldStyle: this.props.textFieldProps ?
         this.props.textFieldProps.style : null
     });
   }
 
+  handleInputChange = event => {
+    if (this.props.onChange !== undefined) {
+      this.props.onChange(event);
+    }
+  }
+
   render() {
     return (
       <div
-        
         className="modal-textfield"
         style={this.state.textfieldStyle}
       >
@@ -53,6 +65,8 @@ export default class ModalTextfield extends React.Component {
           onFocus={this.handleInputFocus}
           onBlur={this.handleInputFocusOut}
           style={this.state.inputStyle}
+          value={this.props.value}
+          onChange={this.handleInputChange}
         />
         {this.props.children}
       </div>
