@@ -1,31 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { withStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
 
 import ModalFormGroup from './ModalFormGroup';
 
 import './EditItemModal.css';
 
-const styles = themes => ({
-
-});
-
-class EditItemModal extends React.Component {
-  constructor(props) {
+export default class EditItemModal extends React.Component {
+  constructor (props) {
     super(props);
 
     this.modalFormGroup = React.createRef();
     this.state = { openModal: false };
   }
 
-  componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyDown);
+  componentDidMount () {
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyDown);
+  componentWillUnmount () {
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handleKeyDown = event => {
@@ -64,7 +59,7 @@ class EditItemModal extends React.Component {
   }
 
   handleModalFormSubmit = () => {
-    let item = this.modalFormGroup.current
+    const item = this.modalFormGroup.current
       .handleModalFormSubmit();
 
     if (item !== null) {
@@ -73,13 +68,12 @@ class EditItemModal extends React.Component {
     }
   }
 
-  render() {
-    const { classes } = this.props;
+  render () {
     return (
       <Fade in={this.state.openModal}>
         <div className="modal-backdrop">
           <div className="modal">
-            <ModalFormGroup 
+            <ModalFormGroup
               ref={this.modalFormGroup}
             />
             <div className="modal-button-group">
@@ -104,7 +98,6 @@ class EditItemModal extends React.Component {
 }
 
 EditItemModal.propTypes = {
-  classes: PropTypes.object
+  onPopoverClose: PropTypes.func,
+  onModalFormSubmit: PropTypes.func
 };
-
-export default withStyles(styles)(EditItemModal);

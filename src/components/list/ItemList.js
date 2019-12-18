@@ -18,7 +18,7 @@ import './ItemList.css';
 const styles = themes => ({
   root: {
     width: '80%',
-    maxWidth: '1000px',
+    maxWidth: '800px',
     minWidth: '500px',
     borderRadius: '15px',
     margin: '5px 5px 20px 5px',
@@ -94,6 +94,7 @@ ItemList.propTypes = {
   totalItemAmt: PropTypes.number,
   items: PropTypes.array,
   onDeleteItem: PropTypes.func,
+  onEditItem: PropTypes.func,
   classes: PropTypes.object
 };
 

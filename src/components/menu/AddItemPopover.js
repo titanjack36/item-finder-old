@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import TextField from '../shared/Textfield';
 import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/styles';
@@ -35,11 +35,11 @@ const styles = themes => ({
 });
 
 class AddItemPopover extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
 
+    this.inputNameTextfield = React.createRef();
     this.editItemModal = React.createRef();
-
     this.state = {
       openPopover: false,
       itemNameValue: '',
@@ -49,16 +49,16 @@ class AddItemPopover extends React.Component {
     };
   }
 
-  componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyDown);
+  componentDidMount () {
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyDown);
+  componentWillUnmount () {
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handleKeyDown = event => {
-    const ESCAPE_KEY = 27, ENTER_KEY = 13;
+    const ESCAPE_KEY = 27; const ENTER_KEY = 13;
 
     if (event.keyCode !== undefined) {
       switch (event.keyCode) {
@@ -78,6 +78,11 @@ class AddItemPopover extends React.Component {
 
   handlePopoverOpen = () => {
     this.setState({ openPopover: true });
+
+    setTimeout(
+      () => this.inputNameTextfield.current.setFocusToInput(),
+      200
+    );
   }
 
   handlePopoverClose = () => {
@@ -135,9 +140,9 @@ class AddItemPopover extends React.Component {
 
       if (!error) {
         this.props.onNewItemCreated({
-            name: this.state.itemNameValue,
-            location: this.state.itemLocValue,
-            tags: []
+          name: this.state.itemNameValue,
+          location: this.state.itemLocValue,
+          tags: []
         });
         this.handlePopoverClose();
       }
@@ -148,7 +153,7 @@ class AddItemPopover extends React.Component {
     this.props.onNewItemCreated(item);
   }
 
-  render() {
+  render () {
     const { classes } = this.props;
     return (
       <Slide
@@ -167,33 +172,41 @@ class AddItemPopover extends React.Component {
           >
             <div className="textfield-group">
               <p className="popover-title">New Item</p>
-              <TextField autoFocus
-                id="standard-basic"
-                className={classes.textField}
-                label="Item Name"
-                margin="dense"
-                color="secondary"
+              <p className="popover-textfield-label">
+                Item Name
+              </p>
+              <TextField
+                ref={this.inputNameTextfield}
+                textFieldProps={{
+                  style: {
+                    width: '100%'
+                  }
+                }}
+                containerProps={{
+                  style: {
+                    marginBottom: '5px'
+                  }
+                }}
                 value={this.state.itemNameValue}
                 onChange={this.handleItemNameFieldChange}
                 error={this.state.itemNameFieldError}
-                helperText={(
-                  this.state.itemNameFieldError ?
-                    "Item name field cannot be empty" : ""
-                )}
+                errorLabel="Item name field cannot be empty"
+                showErrorInPlaceholder={true}
               />
+              <p className="popover-textfield-label">
+                Item Location
+              </p>
               <TextField
-                id="standard-basic"
-                className={classes.textField}
-                label="Item Location"
-                margin="dense"
-                color="secondary"
+                textFieldProps={{
+                  style: {
+                    width: '100%'
+                  }
+                }}
                 value={this.state.itemLocValue}
                 onChange={this.handleItemLocFieldChange}
                 error={this.state.itemLocFieldError}
-                helperText={(
-                  this.state.itemLocFieldError ?
-                    "Item location field cannot be empty" : ""
-                )}
+                errorLabel="Item location field cannot be empty"
+                showErrorInPlaceholder={true}
               />
             </div>
             <div className="button-group">

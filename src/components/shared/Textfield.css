@@ -1,8 +1,7 @@
-.modal-textfield {
+.shared-textfield {
     height: 35px;
-    width: 50%;
+    width: 200px;
     padding: 0 10px;
-    margin-bottom: 20px;
     border: none;
     border-radius: 5px;
 
@@ -24,11 +23,11 @@
     transition:.2s;
 }
 
-.modal-textfield:hover {
+.shared-textfield:hover {
     background-color: #e5e5e5;
 }
 
-.modal-textfield > input {
+.shared-textfield > input {
     background: transparent;
     border: none;
     width: 100%;
@@ -38,6 +37,23 @@
     font-size: 18px;
 }
 
-.modal-textfield > input:focus {
+.shared-textfield > input:focus {
     outline: none;
+}
+
+.shared-textfield ::placeholder {
+    font-size: 15px;
+    color: #d63b3b;
+    opacity: 1;
+}
+
+.shared-textfield + .error-placeholder {
+    height: 25px;
+}
+
+.shared-textfield + .error-label {
+    margin: 2px 0 5px 0;
+    font-size: 15px;
+    color: #eb3d3d;
+    text-align: left;
 }

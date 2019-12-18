@@ -46,21 +46,21 @@ export default class ListPage extends React.Component {
 
   deleteItem = itemKey => {
     this.setState(state => ({
-      items: state.items.filter(listItem => 
-          listItem.key !== itemKey
-        )
+      items: state.items.filter(listItem =>
+        listItem.key !== itemKey
+      )
     }));
     this.filterItemList(this.state.filterText);
   }
 
   editItem = item => {
-    let itemList = this.state.items;
+    const itemList = this.state.items;
     for (let i = 0; i < itemList.length; i++) {
       if (itemList[i].key === item.key) {
         itemList[i] = item;
       }
     }
-    this.setState({items: itemList});
+    this.setState({ items: itemList });
     this.filterItemList(this.state.filterText);
   }
 

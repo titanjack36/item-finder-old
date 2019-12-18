@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTimes, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import ModalTextfield from './ModalTextfield';
+import Textfield from '../shared/Textfield';
 
 import './ModalFormGroup.css';
 import { IconButton } from '@material-ui/core';
@@ -28,13 +28,12 @@ const styles = themes => ({
 });
 
 class ModalFormGroup extends React.Component {
-    
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     this.nextTagKey = 0;
     this.itemNameTextField = React.createRef();
-    this.state = { 
+    this.state = {
       openModal: false,
       itemId: null,
       itemName: '',
@@ -58,10 +57,7 @@ class ModalFormGroup extends React.Component {
       this.clearModalItemValues();
     }
 
-    setTimeout(() => {
-      this.itemNameTextField.current
-        .getTextfieldInputRef().current.focus();
-    }, 200);
+    this.itemNameTextField.current.setFocusToInput(200);
   }
 
   clearModalItemValues = () => {
@@ -74,11 +70,17 @@ class ModalFormGroup extends React.Component {
   }
 
   handleItemNameFieldChange = event => {
-    this.setState({itemName: event.target.value});
+    this.setState({
+      itemName: event.target.value,
+      itemNameFieldError: false
+    });
   }
 
   handleItemLocFieldChange = event => {
-    this.setState({itemLoc: event.target.value});
+    this.setState({
+      itemLoc: event.target.value,
+      itemLocFieldError: false
+    });
   }
 
   getNextTagKey = (tags) => {
@@ -90,46 +92,46 @@ class ModalFormGroup extends React.Component {
   }
 
   handleAddTag = () => {
-    let tags = this.state.itemTags;
-    tags.push({key: this.nextTagKey, value: ''});
-    this.setState({itemTags: tags});
+    const tags = this.state.itemTags;
+    tags.push({ key: this.nextTagKey, value: '' });
+    this.setState({ itemTags: tags });
     this.nextTagKey++;
   }
 
   handleDeleteTag = index => {
-    let tags = this.state.itemTags;
+    const tags = this.state.itemTags;
     tags.splice(index, 1);
-    this.setState({itemTags: tags});
+    this.setState({ itemTags: tags });
   }
 
   handleItemTagFieldChange = (index, event) => {
-    let tags = this.state.itemTags;
+    const tags = this.state.itemTags;
     tags[index].value = event.target.value;
-    this.setState({itemTags: tags});
+    this.setState({ itemTags: tags });
   }
 
   handleModalFormSubmit = () => {
     let error = false;
 
     if (this.state.itemName.length === 0) {
-      this.setState({itemNameFieldError: true});
+      this.setState({ itemNameFieldError: true });
       error = true;
     }
 
     if (this.state.itemLoc.length === 0) {
-      this.setState({itemLocFieldError: true});
+      this.setState({ itemLocFieldError: true });
       error = true;
     }
 
     if (error) {
       return null;
     } else {
-      let itemTags = this.state.itemTags.filter(tag => 
-          tag.value.length !== 0
-        ).map((tag, index) =>
-          ({ key: index, value: tag.value })
-        );
-      
+      const itemTags = this.state.itemTags.filter(tag =>
+        tag.value.length !== 0
+      ).map((tag, index) =>
+        ({ key: index, value: tag.value })
+      );
+
       return ({
         key: this.state.itemId,
         name: this.state.itemName,
@@ -139,65 +141,77 @@ class ModalFormGroup extends React.Component {
     }
   }
 
-  render() {
+  render () {
     const { classes } = this.props;
     return (
       <div className="modal-form-group">
         <p className="modal-textfield-label">
           Item Name
         </p>
-        <ModalTextfield
+        <Textfield
           ref={this.itemNameTextField}
-          textFieldProps={{ style: {
-            height: '50px',
-            width: '75%',
-          }}}
-          inputProps={{ style: {
-            fontSize: '25px',
-          }}}
+          textFieldProps={{
+            style: {
+              height: '50px',
+              width: '75%'
+            }
+          }}
+          inputProps={{
+            style: {
+              fontSize: '25px'
+            }
+          }}
           value={this.state.itemName}
           onChange={this.handleItemNameFieldChange}
           error={this.state.itemNameFieldError}
           errorLabel="Item name field cannot be empty"
+          enableErrorLabelFiller={true}
         >
           <FontAwesomeIcon
             className="pencil-icon"
             icon={faPencilAlt}
           />
-        </ModalTextfield>
+        </Textfield>
         <p className="modal-textfield-label">
           Item Location
         </p>
-        <ModalTextfield
+        <Textfield
           value={this.state.itemLoc}
           onChange={this.handleItemLocFieldChange}
           error={this.state.itemLocFieldError}
           errorLabel="Item location field cannot be empty"
+          enableErrorLabelFiller={true}
         >
           <FontAwesomeIcon
             className="pencil-icon"
             icon={faPencilAlt}
           />
-        </ModalTextfield>
+        </Textfield>
         <p className="modal-textfield-label">
           Item Tags
         </p>
         <div className="item-tags-container">
           {
             this.state.itemTags.map((tag, index) =>
-              <ModalTextfield
+              <Textfield
                 key={tag.key}
-                textFieldProps={{ style: {
-                  width: '150px',
-                  marginRight: '10px',
-                  paddingRight: '0px'
-                }}}
+                textFieldProps={{
+                  style: {
+                    width: '150px',
+                    paddingRight: '0px'
+                  }
+                }}
+                containerProps={{
+                  style: {
+                    margin: '0 10px 10px 0'
+                  }
+                }}
                 value={tag.value}
-                onChange={event => 
+                onChange={event =>
                   this.handleItemTagFieldChange(index, event)
                 }
               >
-                <IconButton 
+                <IconButton
                   className={classes.closeButton}
                   onClick={() => this.handleDeleteTag(index)}
                 >
@@ -206,7 +220,7 @@ class ModalFormGroup extends React.Component {
                     icon={faTimes}
                   />
                 </IconButton>
-              </ModalTextfield>
+              </Textfield>
             )
           }
           <IconButton
@@ -220,7 +234,7 @@ class ModalFormGroup extends React.Component {
           </IconButton>
         </div>
       </div>
-    )
+    );
   }
 }
 

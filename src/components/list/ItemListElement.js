@@ -48,6 +48,12 @@ class ItemListElement extends React.Component {
     );
   }
 
+  handleRowDoubleClick = () => {
+    this.editItemModal.current.handleModalOpen(
+      this.props.item
+    );
+  }
+
   render () {
     const { classes } = this.props;
     return (
@@ -55,6 +61,7 @@ class ItemListElement extends React.Component {
         className="table-row"
         onMouseEnter={this.mouseEnter}
         onMouseLeave={this.mouseLeave}
+        onDoubleClick={this.handleRowDoubleClick}
       >
         <TableCell className={classes.nameCell}>
           {this.props.item.name}
@@ -64,12 +71,12 @@ class ItemListElement extends React.Component {
         </TableCell>
         <TableCell>
           <ul className="tag-list">
-          {this.props.item.tags.map(
-            tag => 
-              <li className="tag-badge" key={tag.key}>
-                {tag.value}
-              </li>
-          )}
+            {this.props.item.tags.map(
+              tag =>
+                <li className="tag-badge" key={tag.key}>
+                  {tag.value}
+                </li>
+            )}
           </ul>
         </TableCell>
         <TableCell align="right" className={classes.actionsCell}>
@@ -79,7 +86,7 @@ class ItemListElement extends React.Component {
               icon={faThumbtack}
             />
           </IconButton>
-          <IconButton 
+          <IconButton
             className={classes.actionButton}
             onClick={this.handleEditButtonClick}
           >
@@ -111,6 +118,7 @@ class ItemListElement extends React.Component {
 
 ItemListElement.propTypes = {
   onDeleteItem: PropTypes.func,
+  onEditItem: PropTypes.func,
   item: PropTypes.object,
   classes: PropTypes.object
 };

@@ -32,19 +32,20 @@
 }
 
 .textfield-group {
-    padding: 15px 0 20px 20px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 15px 0 0 20px;
 
     width: 60%;
 }
 
 .popover-title {
-    margin: 0px;
+    margin: 0 0 8px 0;
     color: #a1a1a1;
     font-size: 20px;
+}
+
+.popover-textfield-label {
+    margin: 0px;
+    font-size: 15px;
 }
 
 .button-group {
