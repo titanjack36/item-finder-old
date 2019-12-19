@@ -78,7 +78,7 @@ class MainMenu extends React.Component {
                 </button>
                 <div className="divider"></div>
                 <span
-                  className="title"
+                  className="main-title"
                   style={this.state.showTitle}
                 >
                         ItemFinder

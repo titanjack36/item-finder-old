@@ -16,7 +16,8 @@ export default class ListPage extends React.Component {
       filteredItems: [
         { key: 0, name: 'item1', location: 'test', tags: [{ key: 0, value: 'tag1' }, { key: 1, value: 'tag2' }] }
       ],
-      filterText: ''
+      filterText: '',
+      filterBy: 'name'
     };
     this.nextKey = 1;
   }
@@ -40,8 +41,8 @@ export default class ListPage extends React.Component {
     this.filterItemList(this.state.filterText);
   }
 
-  searchItem = searchText => {
-    this.filterItemList(searchText);
+  searchItem = (searchText, searchBy) => {
+    this.filterItemList(searchText, searchBy);
   }
 
   deleteItem = itemKey => {
@@ -64,11 +65,37 @@ export default class ListPage extends React.Component {
     this.filterItemList(this.state.filterText);
   }
 
-  filterItemList = filterText => {
+  filterItemList = (filterText, filterBy) => {
     if (filterText !== undefined && filterText.length > 0) {
-      const filteredItemList = this.state.items.filter(
-        item => item.name.includes(filterText)
-      );
+      let filteredItemList = [];
+
+      switch (filterBy) {
+        case 'location':
+          filteredItemList = this.state.items.filter(
+            item => item.location.includes(filterText)
+          );
+          break;
+
+        case 'tags':
+          filteredItemList = this.state.items.filter(
+            item => {
+              return (
+                item.tags.filter(
+                  tag => tag.value.includes(filterText)
+                ).length > 0
+              );
+            }
+          );
+          break;
+
+        // by default, search by item name
+        default:
+          filteredItemList = this.state.items.filter(
+            item => item.name.includes(filterText)
+          );
+          break;
+      }
+
       this.setState({
         filteredItems: filteredItemList,
         filterText: filterText
@@ -101,35 +128,51 @@ export default class ListPage extends React.Component {
 
 function binarySearchInsertion (itemList, itemName) {
   const itemListLen = itemList.length;
-  if (itemListLen < 1) return 0;
+  if (itemListLen < 1) {
+    return 0;
+  }
 
   let lo = 0; let hi = itemListLen;
   while (lo < hi) {
     const mid = parseInt((hi + lo) / 2);
-
     let result = compare(itemList[mid].name, itemName);
 
-    if (result === '=') return mid;
-    else if (result === '<') {
-      if (mid + 1 >= itemListLen) return itemListLen;
-      else {
+    if (result === '=') {
+      return mid;
+    } else if (result === '<') {
+      if (mid + 1 >= itemListLen) {
+        return itemListLen;
+      } else {
         result = compare(itemList[mid + 1].name, itemName);
-        if (result === '=' || result === '>') { return mid + 1; } else lo = mid + 1;
+        if (result === '=' || result === '>') {
+          return mid + 1;
+        } else {
+          lo = mid + 1;
+        }
       }
     } else if (result === '>') {
-      if (mid - 1 < 0) return 0;
-      else {
+      if (mid - 1 < 0) {
+        return 0;
+      } else {
         result = compare(itemList[mid - 1].name, itemName);
-        if (result === '=' || result === '<') { return mid; } else hi = mid - 1;
+        if (result === '=' || result === '<') {
+          return mid;
+        } else {
+          hi = mid - 1;
+        }
       }
-    } else return itemListLen;
+    } else {
+      return itemListLen;
+    }
   }
 
   return lo;
 }
 
 function compare (word1, word2) {
-  if (word1 === word2) return '=';
+  if (word1 === word2) {
+    return '=';
+  }
 
   let wordIndex = 0;
   while (wordIndex === 0 ||

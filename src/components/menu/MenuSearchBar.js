@@ -7,6 +7,8 @@ import { withStyles } from '@material-ui/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faCog } from '@fortawesome/free-solid-svg-icons';
 
+import SearchSettingsMenu from './SearchSettingsMenu';
+
 import './MainSearchBar.css';
 
 const styles = themes => ({
@@ -25,7 +27,12 @@ class MenuSearchBar extends React.Component {
   constructor (props) {
     super(props);
 
-    this.state = { showSearchBar: { display: 'flex' } };
+    this.searchSettingsMenu = React.createRef();
+    this.state = {
+      showSearchBar: { display: 'flex' },
+      searchValue: '',
+      searchBy: 'name'
+    };
   }
 
   componentDidMount () {
@@ -69,8 +76,32 @@ class MenuSearchBar extends React.Component {
       }
     }
 
-    updateSearch = event => {
-      this.props.onSearchItem(event.target.value);
+    updateSearch = (event, searchBy) => {
+      if (event !== undefined) {
+        this.setState({
+          searchValue: event.target.value
+        });
+        this.props.onSearchItem(
+          event.target.value,
+          this.state.searchBy
+        );
+      }
+      if (searchBy !== undefined) {
+        this.setState({ searchBy: searchBy });
+        this.props.onSearchItem(
+          this.state.searchValue,
+          searchBy
+        );
+      }
+    }
+
+    handleSettingsButtonClick = event => {
+      this.searchSettingsMenu.current
+        .handlePopoverOpen(event);
+    }
+
+    handleMenuItemSelected = (menuItem) => {
+      this.updateSearch(undefined, menuItem);
     }
 
     render () {
@@ -86,18 +117,28 @@ class MenuSearchBar extends React.Component {
           />
           <input
             type="text"
-            placeholder="Search by item name"
+            placeholder={
+              'Search by item ' + this.state.searchBy
+            }
             className="text-input"
+            value={this.state.searchValue}
             onChange={this.updateSearch}
           />
           <IconButton
             className={classes.settingsButton}
+            onClick={this.handleSettingsButtonClick}
           >
             <FontAwesomeIcon
               className="cogs-icon"
               icon={faCog}
             />
           </IconButton>
+          <SearchSettingsMenu
+            ref={this.searchSettingsMenu}
+            onMenuItemSelected={
+              this.handleMenuItemSelected
+            }
+          />
         </div>
       );
     }
