@@ -114,10 +114,11 @@ export default class Textfield extends React.Component {
             ? <p className="error-label">
               {this.props.errorLabel}
             </p>
-            : (this.props.enableErrorLabelFiller ===
+            : (
+              this.props.enableErrorLabelFiller ===
                 true
-              ? <div className="error-placeholder" />
-              : null
+                ? <div className="error-placeholder" />
+                : null
             )
         }
       </div>

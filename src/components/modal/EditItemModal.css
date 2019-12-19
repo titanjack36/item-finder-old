@@ -26,22 +26,6 @@
     box-shadow: 0px 5px 15px -1px rgba(0,0,0,0.1);
 }
 
-.item-tags-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.close-icon {
-    color: #c9c9c9;
-    font-size: 20px;
-}
-
-.add-tag-icon {
-    color: #bbbbbb;
-    font-size: 20px;
-}
-
 .modal-button-group {
     height: 10%;
 
@@ -56,8 +40,10 @@
     border-radius: 5px;
     border: none;
 
-    color: #7398ff; 
-    background-color: #f2f2f2;
+    /*color: #7398ff;
+    background-color: #f2f2f2;*/
+    color: #0548FF;
+    background-color: #e0e0e0;
 
     font-size: 15px;
     font-weight: bold;
@@ -70,7 +56,8 @@
 }
 
 .modal-button:hover {
-    background-color: #e1e9ff;
+    /*background-color: #e1e9ff;*/
+    background-color: #aec4ff;
 
     -webkit-box-shadow: 0px 5px 15px -1px rgba(0,0,0,0.37); 
     box-shadow: 0px 5px 15px -1px rgba(0,0,0,0.1);
@@ -79,7 +66,8 @@
 }
 
 .modal-button:active {
-    background-color: #afc4ff;
+    /*background-color: #afc4ff;*/
+    background-color: #7e9df1;
 
     -webkit-box-shadow: 0px 5px 15px -5px rgba(0,0,0,0.37); 
     box-shadow: 0px 5px 15px -5px rgba(0,0,0,0.1);

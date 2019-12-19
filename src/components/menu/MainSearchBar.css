@@ -10,6 +10,9 @@
 .searchbox .text-input {
     border: none;
     width: 100%;
+    height: 40px;
+    margin-top: 2px;
+    font-size: 14px;
 }
 
 .searchbox .text-input:focus {
@@ -17,23 +20,31 @@
 }
 
 ::placeholder {
-    color: #c9c9c9;
+    /*color: #c9c9c9;*/
+    color: #595959;
+    font-size: 14px;
+    letter-spacing: 0.75px;
     opacity: 1;
 }
   
 :-ms-input-placeholder {
-    color: #c9c9c9;
+    /*color: #c9c9c9;*/
+    color: #595959;
 }
 
 ::-ms-input-placeholder {
-    color: #c9c9c9;
+    /*color: #c9c9c9;*/
+    color: #595959;
 }
 
 .searchbox .search-icon {
+    /*color: #c9c9c9;*/
+    color: #919191;
     margin: 0 10px;
 }
 
 .searchbox .cogs-icon {
-    color: #c9c9c9;
+    /*color: #c9c9c9;*/
+    color: #919191;
     font-size: 18px;
 }

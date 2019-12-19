@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Button from '@material-ui/core/Button';
 import TextField from '../shared/Textfield';
 import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,17 +19,6 @@ const styles = themes => ({
     height: '30px',
     padding: '0px',
     marginLeft: '95px'
-  },
-  advancedButton: {
-    marginRight: '8px',
-    width: '125px'
-  },
-  doneButton: {
-    marginRight: '8px',
-    width: '125px'
-  },
-  textField: {
-    marginTop: '0px'
   }
 });
 
@@ -177,15 +165,9 @@ class AddItemPopover extends React.Component {
               </p>
               <TextField
                 ref={this.inputNameTextfield}
-                textFieldProps={{
-                  style: {
-                    width: '100%'
-                  }
-                }}
+                textFieldProps={{ style: { width: '100%' } }}
                 containerProps={{
-                  style: {
-                    marginBottom: '5px'
-                  }
+                  style: { marginBottom: '5px' }
                 }}
                 value={this.state.itemNameValue}
                 onChange={this.handleItemNameFieldChange}
@@ -197,19 +179,17 @@ class AddItemPopover extends React.Component {
                 Item Location
               </p>
               <TextField
-                textFieldProps={{
-                  style: {
-                    width: '100%'
-                  }
-                }}
+                textFieldProps={{ style: { width: '100%' } }}
                 value={this.state.itemLocValue}
                 onChange={this.handleItemLocFieldChange}
                 error={this.state.itemLocFieldError}
-                errorLabel="Item location field cannot be empty"
+                errorLabel={
+                  'Item location field cannot be empty'
+                }
                 showErrorInPlaceholder={true}
               />
             </div>
-            <div className="button-group">
+            <div className="popover-button-group">
               <IconButton
                 className={classes.closePopoverButton}
                 onClick={this.handlePopoverClose}
@@ -219,22 +199,18 @@ class AddItemPopover extends React.Component {
                   icon={faTimes}
                 />
               </IconButton>
-              <Button
-                variant="contained"
-                className={classes.doneButton}
-                color="primary"
+              <button
+                className="popover-button done"
                 onClick={this.handleSaveAndClose}
               >
                 Done
-              </Button>
-              <Button
-                variant="contained"
-                className={classes.advancedButton}
-                color="primary"
+              </button>
+              <button
+                className="popover-button advanced"
                 onClick={this.handleAdvancedButtonClick}
               >
                 Advanced
-              </Button>
+              </button>
             </div>
             <EditItemModal
               ref={this.editItemModal}

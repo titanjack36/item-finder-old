@@ -5,7 +5,8 @@
 
 .modal-textfield-label {
     margin: 0 5px 5px 0;
-    color: #a0a0a0;
+    /*color: #a0a0a0;*/
+    color: #595959;
     font-size: 16px;
     text-align: left;
 }
@@ -17,15 +18,18 @@
 }
 
 .pencil-icon {
-    color: #c9c9c9;
+    /*color: #c9c9c9;*/
+    color: #707070;
 }
 
 .close-icon {
-    color: #c9c9c9;
+    /*color: #c9c9c9;*/
+    color: #707070;
     font-size: 20px;
 }
 
 .add-tag-icon {
-    color: #bbbbbb;
+    /*color: #bbbbbb;*/
+    color: #707070;
     font-size: 20px;
 }
