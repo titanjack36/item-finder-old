@@ -31,6 +31,7 @@ const styles = themes => ({
   toolbar: {
     padding: '0px',
     color: '#c9c9c9',
+    backgroundColor: '#ffffff',
     display: 'flex',
     justifyContent: 'space-between'
   }

@@ -10,6 +10,7 @@ import { faSearch, faCog } from '@fortawesome/free-solid-svg-icons';
 import SearchSettingsMenu from './SearchSettingsMenu';
 
 import './MainSearchBar.css';
+import { FormattedHTMLMessage } from 'react-intl';
 
 const styles = themes => ({
   inputBase: {
@@ -115,15 +116,22 @@ class MenuSearchBar extends React.Component {
             className="search-icon"
             icon={faSearch}
           />
-          <input
-            type="text"
-            placeholder={
-              'Search by item ' + this.state.searchBy
+          <FormattedHTMLMessage
+            id={
+              "menu.search.prompt." + 
+                this.state.searchBy
             }
-            className="text-input"
-            value={this.state.searchValue}
-            onChange={this.updateSearch}
-          />
+          >
+            {msg => (
+              <input
+                type="text"
+                placeholder={msg}
+                className="text-input"
+                value={this.state.searchValue}
+                onChange={this.updateSearch}
+              />
+            )}
+          </FormattedHTMLMessage>
           <IconButton
             className={classes.settingsButton}
             onClick={this.handleSettingsButtonClick}

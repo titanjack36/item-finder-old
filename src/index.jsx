@@ -1,23 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+import { flatten } from 'flat';
+import {IntlProvider} from "react-intl";
+import lang_en from './assets/i18n/messages/en.json';
+import lang_zh from './assets/i18n/messages/zh.json';
 
 import ListPage from './components/ListPage';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#ffffff'
-    },
-    secondary: {
-      main: '#c1c1c1'
-    }
-  }
-});
+const messages = {
+  'en': flatten(lang_en, {safe: true}),
+  'zh': flatten(lang_zh, {safe: true})
+}
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
+  <IntlProvider locale={'en-US'} messages={messages.en}>
     <ListPage />
-  </ThemeProvider>,
+  </IntlProvider>,
   document.getElementById('root')
 );

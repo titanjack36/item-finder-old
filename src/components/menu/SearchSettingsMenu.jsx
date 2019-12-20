@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/styles';
-
-import './SearchSettingsMenu.css';
+import { FormattedHTMLMessage } from 'react-intl';
 
 const styles = themes => ({
   menuItem: {
@@ -71,7 +70,11 @@ class SearchSettingsMenu extends React.Component {
         keepMounted
         onClose={this.handlePopoverClose}
       >
-        <MenuItem disabled={true}>Search By</MenuItem>
+        <MenuItem disabled={true}>
+          <FormattedHTMLMessage 
+            id="menu.search.settings.title"
+          />
+        </MenuItem>
         <MenuItem
           className={classes.menuItem}
           onClick={ () =>
@@ -79,7 +82,9 @@ class SearchSettingsMenu extends React.Component {
           }
           style={this.determineStyle('name')}
         >
-          Name
+          <FormattedHTMLMessage 
+            id="menu.search.settings.items.name"
+          />
         </MenuItem>
         <MenuItem
           className={classes.menuItem}
@@ -88,7 +93,9 @@ class SearchSettingsMenu extends React.Component {
           }
           style={this.determineStyle('location')}
         >
-          Location
+          <FormattedHTMLMessage 
+            id="menu.search.settings.items.location"
+          />
         </MenuItem>
         <MenuItem
           className={classes.menuItem}
@@ -97,7 +104,9 @@ class SearchSettingsMenu extends React.Component {
           }
           style={this.determineStyle('tags')}
         >
-          Tags
+          <FormattedHTMLMessage 
+            id="menu.search.settings.items.tags"
+          />
         </MenuItem>
       </Menu>
     );

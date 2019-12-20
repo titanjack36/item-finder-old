@@ -1,0 +1,85 @@
+{
+  "menu": {
+    "search": {
+      "prompt": {
+        "name": "Search by item name",
+        "location": "Search by item location",
+        "tags": "Search by item tags"
+      },
+      "settings": {
+        "title": "Search by",
+        "items": {
+          "name": "Name",
+          "location": "Location",
+          "tags": "Tags"
+        }
+      }
+    },
+    "popover": {
+      "title": "New Item",
+      "textfields": {
+        "itemName": {
+          "label": "Item Name",
+          "error": "Item name field cannot be empty"
+        },
+        "itemLocation": {
+          "label": "Item Location",
+          "error": "Item name field cannot be empty"
+        }
+      },
+      "buttons": {
+        "done": {
+          "label": "Done"
+        },
+        "advanced": {
+          "label": "Advanced"
+        }
+      }
+    }
+  },
+  "modal": {
+    "textfields": {
+      "itemName": {
+        "label": "Item Name",
+        "error": "Item name field cannot be empty"
+      },
+      "itemLocation": {
+        "label": "Item Location",
+        "error": "Item name field cannot be empty"
+      },
+      "itemTags": {
+        "label": "Item Tags"
+      }
+    },
+    "buttons": {
+      "done": {
+        "label": "Done"
+      },
+      "cancel": {
+        "label": "Cancel"
+      }
+    }
+  },
+  "table": {
+    "header": {
+      "name": "Name",
+      "location": "Location",
+      "tags": "Tags"
+    },
+    "footer": {
+      "left": "End of list, showing ",
+      "center": " of ",
+      "right": " item(s)"
+    }
+  },
+  "prompts": {
+    "noItems": {
+      "title": "No Items",
+      "subtitle": "Items you add will appear here"
+    },
+    "noMatch": {
+      "title": "No Match",
+      "subtitle": "There are no items matching your search"
+    }
+  }
+}

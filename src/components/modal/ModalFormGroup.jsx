@@ -65,7 +65,9 @@ class ModalFormGroup extends React.Component {
       itemId: null,
       itemName: '',
       itemLoc: '',
-      itemTags: []
+      itemTags: [],
+      itemNameFieldError: false,
+      itemLocFieldError: false
     });
   }
 

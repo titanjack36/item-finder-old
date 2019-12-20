@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import TextField from '../shared/Textfield';
 import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/styles';
@@ -9,11 +8,12 @@ import { withStyles } from '@material-ui/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
+import PopoverFormGroup from './PopoverFormGroup';
 import EditItemModal from '../modal/EditItemModal';
 
 import './AddItemPopover.css';
 
-const styles = themes => ({
+const styles = () => ({
   closePopoverButton: {
     width: '30px',
     height: '30px',
@@ -26,14 +26,10 @@ class AddItemPopover extends React.Component {
   constructor (props) {
     super(props);
 
-    this.inputNameTextfield = React.createRef();
+    this.popoverFormGroup = React.createRef();
     this.editItemModal = React.createRef();
     this.state = {
-      openPopover: false,
-      itemNameValue: '',
-      itemLocValue: '',
-      itemNameFieldError: false,
-      itemLocFieldError: false
+      openPopover: false
     };
   }
 
@@ -68,7 +64,8 @@ class AddItemPopover extends React.Component {
     this.setState({ openPopover: true });
 
     setTimeout(
-      () => this.inputNameTextfield.current.setFocusToInput(),
+      () => 
+        this.popoverFormGroup.current.setUpPopoverForm(),
       200
     );
   }
@@ -80,58 +77,31 @@ class AddItemPopover extends React.Component {
       this.state.openPopover === true
     ) {
       this.setState({
-        openPopover: false,
-        itemNameValue: '',
-        itemLocValue: '',
-        itemNameFieldError: false,
-        itemLocFieldError: false
+        openPopover: false
       });
-    }
-  }
-
-  handleItemNameFieldChange = event => {
-    this.setState({ itemNameValue: event.target.value });
-    if (this.state.itemNameFieldError) {
-      this.setState({ itemNameFieldError: false });
-    }
-  }
-
-  handleItemLocFieldChange = event => {
-    this.setState({ itemLocValue: event.target.value });
-    if (this.state.itemLocFieldError) {
-      this.setState({ itemLocFieldError: false });
     }
   }
 
   handleAdvancedButtonClick = () => {
     this.editItemModal.current.handleModalOpen({
       key: null,
-      name: this.state.itemNameValue,
-      location: this.state.itemLocValue,
+      name: 
+        this.popoverFormGroup.current
+          .getItemNameFieldValue(),
+      location: 
+        this.popoverFormGroup.current
+          .getItemLocFieldValue(),
       tags: []
     });
   }
 
   handleSaveAndClose = () => {
     if (this.state.openPopover === true) {
-      let error = false;
+      const item = this.popoverFormGroup.current
+        .handlePopoverFormSubmit();
 
-      if (this.state.itemNameValue.length === 0) {
-        this.setState({ itemNameFieldError: true });
-        error = true;
-      }
-
-      if (this.state.itemLocValue.length === 0) {
-        this.setState({ itemLocFieldError: true });
-        error = true;
-      }
-
-      if (!error) {
-        this.props.onNewItemCreated({
-          name: this.state.itemNameValue,
-          location: this.state.itemLocValue,
-          tags: []
-        });
+      if (item !== null) {
+        this.props.onNewItemCreated(item);
         this.handlePopoverClose();
       }
     }
@@ -158,37 +128,9 @@ class AddItemPopover extends React.Component {
             className="popover"
             onMouseDown={e => e.stopPropagation()}
           >
-            <div className="textfield-group">
-              <p className="popover-title">New Item</p>
-              <p className="popover-textfield-label">
-                Item Name
-              </p>
-              <TextField
-                ref={this.inputNameTextfield}
-                textFieldProps={{ style: { width: '100%' } }}
-                containerProps={{
-                  style: { marginBottom: '5px' }
-                }}
-                value={this.state.itemNameValue}
-                onChange={this.handleItemNameFieldChange}
-                error={this.state.itemNameFieldError}
-                errorLabel="Item name field cannot be empty"
-                showErrorInPlaceholder={true}
-              />
-              <p className="popover-textfield-label">
-                Item Location
-              </p>
-              <TextField
-                textFieldProps={{ style: { width: '100%' } }}
-                value={this.state.itemLocValue}
-                onChange={this.handleItemLocFieldChange}
-                error={this.state.itemLocFieldError}
-                errorLabel={
-                  'Item location field cannot be empty'
-                }
-                showErrorInPlaceholder={true}
-              />
-            </div>
+            <PopoverFormGroup 
+              ref={this.popoverFormGroup}
+            />
             <div className="popover-button-group">
               <IconButton
                 className={classes.closePopoverButton}
