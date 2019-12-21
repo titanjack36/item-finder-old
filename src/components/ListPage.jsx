@@ -1,23 +1,37 @@
 import React from 'react';
 
+import { flatten } from 'flat';
+import { IntlProvider } from "react-intl";
+import lang_en from '../assets/i18n/messages/en.json';
+import lang_zh from '../assets/i18n/messages/zh.json';
+
 import MainMenu from './menu/MainMenu';
 import ItemList from './list/ItemList';
 
 import './ListPage.css';
 
+const messages = {
+  'en': flatten(lang_en, { safe: true }),
+  'zh': flatten(lang_zh, { safe: true })
+}
+
 export default class ListPage extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      items: [
-        { key: 0, name: 'item1', location: 'test', tags: [{ key: 0, value: 'tag1' }, { key: 1, value: 'tag2' }] }
-      ],
-      filteredItems: [
-        { key: 0, name: 'item1', location: 'test', tags: [{ key: 0, value: 'tag1' }, { key: 1, value: 'tag2' }] }
-      ],
+      //items: [
+      //  { key: 0, name: 'item1', location: 'test', tags: [{ key: 0, value: 'tag1' }, { key: 1, value: 'tag2' }] }
+      //],
+      //filteredItems: [
+      //  { key: 0, name: 'item1', location: 'test', tags: [{ key: 0, value: 'tag1' }, { key: 1, value: 'tag2' }] }
+      //],
+      items: [],
+      filteredItems: [],
       filterText: '',
-      filterBy: 'name'
+      filterBy: 'name',
+      locale: 'en-US',
+      messages: messages['en']
     };
     this.nextKey = 1;
   }
@@ -31,7 +45,7 @@ export default class ListPage extends React.Component {
       tags: newItemProperties.tags
     };
     const targetIndex =
-          binarySearchInsertion(itemList, nextItem.name);
+      binarySearchInsertion(itemList, nextItem.name);
     itemList.splice(targetIndex, 0, nextItem);
 
     this.setState({
@@ -72,7 +86,8 @@ export default class ListPage extends React.Component {
       switch (filterBy) {
         case 'location':
           filteredItemList = this.state.items.filter(
-            item => item.location.includes(filterText)
+            item => item.location.toLowerCase()
+              .includes(filterText.toLowerCase())
           );
           break;
 
@@ -81,7 +96,8 @@ export default class ListPage extends React.Component {
             item => {
               return (
                 item.tags.filter(
-                  tag => tag.value.includes(filterText)
+                  tag => tag.value.toLowerCase()
+                    .includes(filterText.toLowerCase())
                 ).length > 0
               );
             }
@@ -91,7 +107,8 @@ export default class ListPage extends React.Component {
         // by default, search by item name
         default:
           filteredItemList = this.state.items.filter(
-            item => item.name.includes(filterText)
+            item => item.name.toLowerCase()
+              .includes(filterText.toLowerCase())
           );
           break;
       }
@@ -108,25 +125,40 @@ export default class ListPage extends React.Component {
     }
   }
 
-  render () {
+  toggleLanguage = nextLanguage => {
+    if (nextLanguage && nextLanguage.length >= 2) {
+      this.setState({
+        locale: nextLanguage,
+        messages: messages[nextLanguage.substring(0, 2)]
+      });
+    }
+  }
+
+  render() {
     return (
-      <div className="main-container">
-        <MainMenu
-          onSearchItem={this.searchItem}
-          onNewItemCreated={this.addItem}
-        />
-        <ItemList
-          items={this.state.filteredItems}
-          totalItemAmt={this.state.items.length}
-          onDeleteItem={this.deleteItem}
-          onEditItem={this.editItem}
-        />
-      </div>
+      <IntlProvider
+        locale={this.state.locale}
+        messages={this.state.messages}
+      >
+        <div className="main-container">
+          <MainMenu
+            onSearchItem={this.searchItem}
+            onNewItemCreated={this.addItem}
+            onToggleLanguage={this.toggleLanguage}
+          />
+          <ItemList
+            items={this.state.filteredItems}
+            totalItemAmt={this.state.items.length}
+            onDeleteItem={this.deleteItem}
+            onEditItem={this.editItem}
+          />
+        </div>
+      </IntlProvider>
     );
   }
 }
 
-function binarySearchInsertion (itemList, itemName) {
+function binarySearchInsertion(itemList, itemName) {
   const itemListLen = itemList.length;
   if (itemListLen < 1) {
     return 0;
@@ -169,14 +201,14 @@ function binarySearchInsertion (itemList, itemName) {
   return lo;
 }
 
-function compare (word1, word2) {
+function compare(word1, word2) {
   if (word1 === word2) {
     return '=';
   }
 
   let wordIndex = 0;
   while (wordIndex === 0 ||
-        word1[wordIndex - 1] === word2[wordIndex - 1]) {
+    word1[wordIndex - 1] === word2[wordIndex - 1]) {
     if (word1[wordIndex] < word2[wordIndex]) {
       return '<';
     } else if (word1[wordIndex] > word2[wordIndex]) {

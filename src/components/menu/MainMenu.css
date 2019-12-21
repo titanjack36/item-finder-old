@@ -94,6 +94,16 @@
     outline: none;
 }
 
+.toggle-lang-button {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    color: #595959;
+    text-decoration: underline;
+    cursor: pointer;
+    outline: none;
+}
+
 @media only screen and (max-width: 600px) {
     .menu-content {
         flex-wrap: wrap;
