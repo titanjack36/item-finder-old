@@ -10,6 +10,7 @@ import Textfield from '../shared/Textfield';
 
 import './ModalFormGroup.css';
 import { IconButton } from '@material-ui/core';
+import { FormattedHTMLMessage } from 'react-intl';
 
 const styles = themes => ({
   closeButton: {
@@ -28,7 +29,7 @@ const styles = themes => ({
 });
 
 class ModalFormGroup extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.nextTagKey = 0;
@@ -143,54 +144,72 @@ class ModalFormGroup extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const { classes } = this.props;
     return (
       <div className="modal-form-group">
         <p className="modal-textfield-label">
-          Item Name
-        </p>
-        <Textfield
-          ref={this.itemNameTextField}
-          textFieldProps={{
-            style: {
-              height: '50px',
-              width: '75%'
-            }
-          }}
-          inputProps={{
-            style: {
-              fontSize: '25px'
-            }
-          }}
-          value={this.state.itemName}
-          onChange={this.handleItemNameFieldChange}
-          error={this.state.itemNameFieldError}
-          errorLabel="Item name field cannot be empty"
-          enableErrorLabelFiller={true}
-        >
-          <FontAwesomeIcon
-            className="pencil-icon"
-            icon={faPencilAlt}
+          <FormattedHTMLMessage
+            id="modal.textfields.itemName.label"
           />
-        </Textfield>
-        <p className="modal-textfield-label">
-          Item Location
         </p>
-        <Textfield
-          value={this.state.itemLoc}
-          onChange={this.handleItemLocFieldChange}
-          error={this.state.itemLocFieldError}
-          errorLabel="Item location field cannot be empty"
-          enableErrorLabelFiller={true}
+        <FormattedHTMLMessage
+          id="modal.textfields.itemName.error"
         >
-          <FontAwesomeIcon
-            className="pencil-icon"
-            icon={faPencilAlt}
-          />
-        </Textfield>
+          {msg => (
+            <Textfield
+              ref={this.itemNameTextField}
+              textFieldProps={{
+                style: {
+                  height: '50px',
+                  width: '75%'
+                }
+              }}
+              inputProps={{
+                style: {
+                  fontSize: '25px'
+                }
+              }}
+              value={this.state.itemName}
+              onChange={this.handleItemNameFieldChange}
+              error={this.state.itemNameFieldError}
+              errorLabel={msg}
+              enableErrorLabelFiller={true}
+            >
+              <FontAwesomeIcon
+                className="pencil-icon"
+                icon={faPencilAlt}
+              />
+            </Textfield>
+          )}
+        </FormattedHTMLMessage>
         <p className="modal-textfield-label">
-          Item Tags
+          <FormattedHTMLMessage
+            id="modal.textfields.itemLocation.label"
+          />
+        </p>
+        <FormattedHTMLMessage
+          id="modal.textfields.itemLocation.error"
+        >
+          {msg => (
+            <Textfield
+              value={this.state.itemLoc}
+              onChange={this.handleItemLocFieldChange}
+              error={this.state.itemLocFieldError}
+              errorLabel={msg}
+              enableErrorLabelFiller={true}
+            >
+              <FontAwesomeIcon
+                className="pencil-icon"
+                icon={faPencilAlt}
+              />
+            </Textfield>
+          )}
+        </FormattedHTMLMessage>
+        <p className="modal-textfield-label">
+          <FormattedHTMLMessage
+            id="modal.textfields.itemTags.label"
+          />
         </p>
         <div className="item-tags-container">
           {

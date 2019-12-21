@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Slide from '@material-ui/core/Slide';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/styles';
+import { FormattedHTMLMessage } from 'react-intl';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +13,7 @@ import PopoverFormGroup from './PopoverFormGroup';
 import EditItemModal from '../modal/EditItemModal';
 
 import './AddItemPopover.css';
+
 
 const styles = () => ({
   closePopoverButton: {
@@ -23,7 +25,7 @@ const styles = () => ({
 });
 
 class AddItemPopover extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.popoverFormGroup = React.createRef();
@@ -33,11 +35,11 @@ class AddItemPopover extends React.Component {
     };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown);
   }
 
@@ -64,7 +66,7 @@ class AddItemPopover extends React.Component {
     this.setState({ openPopover: true });
 
     setTimeout(
-      () => 
+      () =>
         this.popoverFormGroup.current.setUpPopoverForm(),
       200
     );
@@ -85,10 +87,10 @@ class AddItemPopover extends React.Component {
   handleAdvancedButtonClick = () => {
     this.editItemModal.current.handleModalOpen({
       key: null,
-      name: 
+      name:
         this.popoverFormGroup.current
           .getItemNameFieldValue(),
-      location: 
+      location:
         this.popoverFormGroup.current
           .getItemLocFieldValue(),
       tags: []
@@ -111,7 +113,7 @@ class AddItemPopover extends React.Component {
     this.props.onNewItemCreated(item);
   }
 
-  render () {
+  render() {
     const { classes } = this.props;
     return (
       <Slide
@@ -128,7 +130,7 @@ class AddItemPopover extends React.Component {
             className="popover"
             onMouseDown={e => e.stopPropagation()}
           >
-            <PopoverFormGroup 
+            <PopoverFormGroup
               ref={this.popoverFormGroup}
             />
             <div className="popover-button-group">
@@ -145,13 +147,17 @@ class AddItemPopover extends React.Component {
                 className="popover-button done"
                 onClick={this.handleSaveAndClose}
               >
-                Done
+                <FormattedHTMLMessage
+                  id="menu.popover.buttons.done.label"
+                />
               </button>
               <button
                 className="popover-button advanced"
                 onClick={this.handleAdvancedButtonClick}
               >
-                Advanced
+                <FormattedHTMLMessage
+                  id="menu.popover.buttons.advanced.label"
+                />
               </button>
             </div>
             <EditItemModal

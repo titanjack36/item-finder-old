@@ -45,7 +45,7 @@
       },
       "itemLocation": {
         "label": "Item Location",
-        "error": "Item name field cannot be empty"
+        "error": "Item location field cannot be empty"
       },
       "itemTags": {
         "label": "Item Tags"
@@ -66,14 +66,10 @@
       "location": "Location",
       "tags": "Tags"
     },
-    "footer": {
-      "left": "End of list, showing ",
-      "center": " of ",
-      "right": " item(s)"
-    }
+    "footer": "End of list, showing {amt} of {totalAmt} item(s)."
   },
   "prompts": {
-    "noItems": {
+    "emptyList": {
       "title": "No Items",
       "subtitle": "Items you add will appear here"
     },

@@ -6,20 +6,21 @@ import Fade from '@material-ui/core/Fade';
 import ModalFormGroup from './ModalFormGroup';
 
 import './EditItemModal.css';
+import { FormattedHTMLMessage } from 'react-intl';
 
 export default class EditItemModal extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.modalFormGroup = React.createRef();
     this.state = { openModal: false };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown);
   }
 
@@ -68,7 +69,7 @@ export default class EditItemModal extends React.Component {
     }
   }
 
-  render () {
+  render() {
     return (
       <Fade in={this.state.openModal}>
         <div className="modal-backdrop">
@@ -81,13 +82,17 @@ export default class EditItemModal extends React.Component {
                 className="modal-button done"
                 onClick={this.handleModalFormSubmit}
               >
-                Done
+                <FormattedHTMLMessage
+                  id="modal.buttons.done.label"
+                />
               </button>
               <button
                 className="modal-button cancel"
                 onClick={this.handleModalClose}
               >
-                Cancel
+                <FormattedHTMLMessage
+                  id="modal.buttons.cancel.label"
+                />
               </button>
             </div>
           </div>

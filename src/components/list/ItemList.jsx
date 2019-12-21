@@ -8,6 +8,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/styles';
+import { FormattedHTMLMessage } from 'react-intl';
 
 import ItemListElement from './ItemListElement';
 import EmptyListPrompt from './EmptyListPrompt';
@@ -30,13 +31,13 @@ const styles = themes => ({
 });
 
 class ItemList extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {};
   }
 
-  render () {
+  render() {
     const { classes } = this.props;
     if (this.props.totalItemAmt === 0) {
       return (
@@ -54,16 +55,32 @@ class ItemList extends React.Component {
             <Table>
               <caption>
                 <center>
-                  End of list, showing&nbsp;
-                  {this.props.items.length} of&nbsp;
-                  {this.props.totalItemAmt} item(s).
+                  <FormattedHTMLMessage
+                    id="table.footer"
+                    values={{
+                      amt: this.props.items.length,
+                      totalAmt: this.props.totalItemAmt
+                    }}
+                  />
                 </center>
               </caption>
               <TableHead>
                 <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Location</TableCell>
-                  <TableCell>Tags</TableCell>
+                  <TableCell>
+                    <FormattedHTMLMessage
+                      id="table.header.name"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <FormattedHTMLMessage
+                      id="table.header.location"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <FormattedHTMLMessage
+                      id="table.header.tags"
+                    />
+                  </TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
