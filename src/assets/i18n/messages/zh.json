@@ -1,0 +1,81 @@
+{
+  "menu": {
+    "search": {
+      "prompt": {
+        "name": "按物品名称搜索",
+        "location": "按物品存储位置搜索",
+        "tags": "按物品标签搜索"
+      },
+      "settings": {
+        "title": "物品搜索方法",
+        "items": {
+          "name": "名称",
+          "location": "存储位置",
+          "tags": "标签"
+        }
+      }
+    },
+    "popover": {
+      "title": "新物品",
+      "textfields": {
+        "itemName": {
+          "label": "物品名称",
+          "error": "物品名称字段不能为空"
+        },
+        "itemLocation": {
+          "label": "物品存储位置",
+          "error": "物品存储位置字段不能为空"
+        }
+      },
+      "buttons": {
+        "done": {
+          "label": "完成"
+        },
+        "advanced": {
+          "label": "更多选择"
+        }
+      }
+    }
+  },
+  "modal": {
+    "textfields": {
+      "itemName": {
+        "label": "物品名称",
+        "error": "物品名称字段不能为空"
+      },
+      "itemLocation": {
+        "label": "物品存储位置",
+        "error": "物品存储位置字段不能为空"
+      },
+      "itemTags": {
+        "label": "物品标签"
+      }
+    },
+    "buttons": {
+      "done": {
+        "label": "完成"
+      },
+      "cancel": {
+        "label": "取消"
+      }
+    }
+  },
+  "table": {
+    "header": {
+      "name": "名称",
+      "location": "存储位置",
+      "tags": "标签"
+    },
+    "footer": "列表结尾, 显示{amt}件物品,总共{totalAmt}件物品"
+  },
+  "prompts": {
+    "emptyList": {
+      "title": "没有物品",
+      "subtitle": "您添加的物品会在这里显示"
+    },
+    "noMatch": {
+      "title": "无匹配的结果",
+      "subtitle": "您的搜索没有对上任何结果"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+.textfield-group {
+    padding: 15px 0 0 20px;
+
+    width: 60%;
+}
+
+.popover-textfield-label {
+    margin: 0px;
+    font-size: 15px;
+    color: #595959;
+}

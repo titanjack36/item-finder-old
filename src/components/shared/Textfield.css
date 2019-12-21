@@ -1,0 +1,60 @@
+.shared-textfield {
+    height: 35px;
+    width: 200px;
+    padding: 0 10px;
+    border: none;
+    border-radius: 5px;
+
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+
+    display: flex;
+    align-items: center;
+
+    font-size: 18px;
+    
+    /*background-color: #eeeeee;*/
+    background-color: #dfdfdf;
+
+    -o-transition:.2s;
+    -ms-transition:.2s;
+    -moz-transition:.2s;
+    -webkit-transition:.2s;
+    transition:.2s;
+}
+
+.shared-textfield:hover {
+    background-color: #e5e5e5;
+}
+
+.shared-textfield > input {
+    background: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
+
+    color: #333333;
+    font-size: 18px;
+}
+
+.shared-textfield > input:focus {
+    outline: none;
+}
+
+.shared-textfield ::placeholder {
+    font-size: 15px;
+    color: #d63b3b;
+    opacity: 1;
+}
+
+.shared-textfield + .error-placeholder {
+    height: 25px;
+}
+
+.shared-textfield + .error-label {
+    margin: 2px 0 5px 0;
+    font-size: 15px;
+    color: #eb3d3d;
+    text-align: left;
+}

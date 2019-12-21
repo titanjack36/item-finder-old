@@ -27,6 +27,23 @@
     color: #aaaaaa;
 }
 
+.tag-list {
+    width: 50%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.tag-badge {
+    display: inline;
+
+    padding: 2px 8px;
+    margin-right: 5px;
+    border-radius: 5px;
+
+    color: #ffffff;
+    background-color: #808080;
+}
+
 .pin-icon {
     font-size: 15px;
 }
