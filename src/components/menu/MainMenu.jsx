@@ -84,7 +84,10 @@ class MainMenu extends React.Component {
         <AppBar className="appbar">
           <Toolbar className={classes.toolbar}>
             <div className="left">
-              <button className="menu-button">
+              <button
+                className="menu-button"
+                onClick={this.props.onToggleSidePanel}
+              >
                 <FontAwesomeIcon
                   className="bars-icon"
                   icon={faBars}
@@ -96,7 +99,7 @@ class MainMenu extends React.Component {
                 style={this.state.showTitle}
               >
                 ItemFinder
-                </span>
+              </span>
               <div className="divider"></div>
               <MenuSearchBar
                 ref={this.mainSearchBar}

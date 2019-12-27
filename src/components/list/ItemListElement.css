@@ -17,12 +17,14 @@
     background-color: #eeeeee;
 }
 
-.icon {
+.action-icon {
+    display: none;
     font-size: 15px;
     color: #fefefe;
 }
 
-.table-row:hover .icon {
+.table-row:hover .action-icon {
+    display: initial;
     font-size: 15px;
     color: #aaaaaa;
 }
@@ -42,16 +44,4 @@
 
     color: #ffffff;
     background-color: #808080;
-}
-
-.pin-icon {
-    font-size: 15px;
-}
-
-.edit-icon {
-    font-size: 15px;
-}
-
-.trash-icon {
-    font-size: 15px;
 }

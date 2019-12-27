@@ -1,0 +1,102 @@
+.side-panel {
+  position: absolute;
+  top: 161px;
+  left: 20px;
+  width: 250px;
+  height: 70vh;
+  border-radius: 15px;
+  padding: 25px;
+  
+  font-family: 'Roboto', sans-serif;
+
+  background-color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  -webkit-box-shadow: 0px 5px 22px 5px rgba(0,0,0,0.1); 
+  box-shadow: 0px 5px 22px 5px rgba(0,0,0,0.1);
+}
+
+.panel-title {
+  width: 100%;
+  margin: 0 0 25px 0;
+  font-size: 20px;
+  color: #595959;
+}
+
+.side-panel > .button-group {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.panel-button {
+  height: 50px;
+  width: 100%;
+  border: 1px solid #cacaca;
+  border-radius: 4px;
+  margin-bottom: 10px;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  background-color: transparent;
+  color: #0059ff;
+
+  -o-transition:.2s;
+  -ms-transition:.2s;
+  -moz-transition:.2s;
+  -webkit-transition:.2s;
+  transition:.2s;
+}
+
+.panel-button:hover {
+  background-color: #e4ecff;
+  border: 1px solid #e4ecff;
+  
+  cursor: pointer;
+}
+
+.panel-button > p {
+  font-weight: bolder;
+  color: #595959;
+}
+
+.panel-button.add {
+  height: 40px;
+  border: 1px solid #2470ff;
+  margin-top: 10px;
+
+  justify-content: center;
+}
+
+.pin-icon {
+  margin: 0 15px;
+}
+
+.bottom-button-group {
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+}
+
+.panel-button.info {
+  height: 40px;
+  width: 40px;
+  margin-bottom: 0;
+  margin-right: 10px;
+}
+
+.panel-button.settings {
+  height: 40px;
+  width: 40px;
+  margin-bottom: 0;
+}

@@ -31,7 +31,7 @@ const styles = themes => ({
 });
 
 class ItemListElement extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.editItemModal = React.createRef();
@@ -54,7 +54,7 @@ class ItemListElement extends React.Component {
     );
   }
 
-  render () {
+  render() {
     const { classes } = this.props;
     return (
       <TableRow
@@ -82,7 +82,7 @@ class ItemListElement extends React.Component {
         <TableCell align="right" className={classes.actionsCell}>
           <IconButton className={classes.actionButton}>
             <FontAwesomeIcon
-              className="icon"
+              className="action-icon"
               icon={faThumbtack}
             />
           </IconButton>
@@ -91,7 +91,7 @@ class ItemListElement extends React.Component {
             onClick={this.handleEditButtonClick}
           >
             <FontAwesomeIcon
-              className="icon"
+              className="action-icon"
               icon={faEdit}
             />
           </IconButton>
@@ -100,7 +100,7 @@ class ItemListElement extends React.Component {
             onClick={this.handleDeleteButtonClick}
           >
             <FontAwesomeIcon
-              className="icon"
+              className="action-icon"
               icon={faTrash}
             />
           </IconButton>

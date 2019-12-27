@@ -6,6 +6,7 @@ import lang_en from '../assets/i18n/messages/en.json';
 import lang_zh from '../assets/i18n/messages/zh.json';
 
 import MainMenu from './menu/MainMenu';
+import SidePanel from './side-panel/SidePanel';
 import ItemList from './list/ItemList';
 
 import './ListPage.css';
@@ -19,6 +20,7 @@ export default class ListPage extends React.Component {
   constructor(props) {
     super(props);
 
+    this.sidePanel = React.createRef();
     this.state = {
       //items: [
       //  { key: 0, name: 'item1', location: 'test', tags: [{ key: 0, value: 'tag1' }, { key: 1, value: 'tag2' }] }
@@ -26,7 +28,8 @@ export default class ListPage extends React.Component {
       //filteredItems: [
       //  { key: 0, name: 'item1', location: 'test', tags: [{ key: 0, value: 'tag1' }, { key: 1, value: 'tag2' }] }
       //],
-      items: [],
+      homes: [{ id: 0, name: "Home", items: [] }],
+      selectedHome: 0,
       filteredItems: [],
       filterText: '',
       filterBy: 'name',
@@ -37,7 +40,10 @@ export default class ListPage extends React.Component {
   }
 
   addItem = (newItemProperties) => {
-    const itemList = this.state.items;
+    const homes = this.state.homes;
+    const selectedHome = this.state.selectedHome;
+    const itemList =
+      homes[selectedHome].items;
     const nextItem = {
       key: this.nextKey,
       name: newItemProperties.name,
@@ -48,8 +54,9 @@ export default class ListPage extends React.Component {
       binarySearchInsertion(itemList, nextItem.name);
     itemList.splice(targetIndex, 0, nextItem);
 
+    homes[selectedHome].items = itemList;
     this.setState({
-      items: itemList
+      homes: homes
     });
     this.nextKey++;
     this.filterItemList(this.state.filterText);
@@ -60,39 +67,48 @@ export default class ListPage extends React.Component {
   }
 
   deleteItem = itemKey => {
-    this.setState(state => ({
-      items: state.items.filter(listItem =>
-        listItem.key !== itemKey
-      )
-    }));
+    const homes = this.state.homes;
+    const selectedHome = this.state.selectedHome;
+
+    homes[selectedHome].items =
+      homes[selectedHome].items.filter(listItem =>
+        listItem.key !== itemKey);
+    this.setState({ homes: homes })
     this.filterItemList(this.state.filterText);
   }
 
   editItem = item => {
-    const itemList = this.state.items;
+    const homes = this.state.homes;
+    const selectedHome = this.state.selectedHome;
+    const itemList = homes[selectedHome].items;
     for (let i = 0; i < itemList.length; i++) {
       if (itemList[i].key === item.key) {
         itemList[i] = item;
       }
     }
-    this.setState({ items: itemList });
+    homes[selectedHome].items = itemList;
+    this.setState({ homes: homes });
     this.filterItemList(this.state.filterText);
   }
 
   filterItemList = (filterText, filterBy) => {
+    const selectedHome = this.state.selectedHome;
     if (filterText !== undefined && filterText.length > 0) {
+      const homes = this.state.homes;
+      const itemList = homes[selectedHome].items;
+
       let filteredItemList = [];
 
       switch (filterBy) {
         case 'location':
-          filteredItemList = this.state.items.filter(
+          filteredItemList = itemList.filter(
             item => item.location.toLowerCase()
               .includes(filterText.toLowerCase())
           );
           break;
 
         case 'tags':
-          filteredItemList = this.state.items.filter(
+          filteredItemList = itemList.filter(
             item => {
               return (
                 item.tags.filter(
@@ -106,7 +122,7 @@ export default class ListPage extends React.Component {
 
         // by default, search by item name
         default:
-          filteredItemList = this.state.items.filter(
+          filteredItemList = itemList.filter(
             item => item.name.toLowerCase()
               .includes(filterText.toLowerCase())
           );
@@ -119,7 +135,8 @@ export default class ListPage extends React.Component {
       });
     } else {
       this.setState({
-        filteredItems: this.state.items,
+        filteredItems:
+          this.state.homes[selectedHome].items,
         filterText: ''
       });
     }
@@ -134,6 +151,30 @@ export default class ListPage extends React.Component {
     }
   }
 
+  toggleSidePanel = () => {
+    this.sidePanel.current.handleToggleSidePanel();
+  }
+
+  selectHome = homeId => {
+    this.state.homes.forEach((home, index) => {
+      if (home.id === homeId) {
+        this.setState({ selectedHome: index });
+      }
+    });
+  }
+
+  addNewHome = newHome => {
+    let homes = this.state.homes;
+    homes.push({
+      id: newHome.id,
+      name: newHome.name,
+      items: []
+    });
+    this.setState({
+      homes: homes
+    })
+  }
+
   render() {
     return (
       <IntlProvider
@@ -145,10 +186,23 @@ export default class ListPage extends React.Component {
             onSearchItem={this.searchItem}
             onNewItemCreated={this.addItem}
             onToggleLanguage={this.toggleLanguage}
+            onToggleSidePanel={this.toggleSidePanel}
+          />
+          <SidePanel
+            ref={this.sidePanel}
+            onSelectHome={this.selectHome}
+            onAddNewHome={this.addNewHome}
           />
           <ItemList
+            listName={
+              this.state.homes[this.state.selectedHome]
+                .name
+            }
             items={this.state.filteredItems}
-            totalItemAmt={this.state.items.length}
+            totalItemAmt={
+              this.state.homes[this.state.selectedHome]
+                .items.length
+            }
             onDeleteItem={this.deleteItem}
             onEditItem={this.editItem}
           />

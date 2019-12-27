@@ -50,7 +50,9 @@ class ItemList extends React.Component {
     } else {
       return (
         <div className="item-list-container">
-          <p className="list-title">My Home</p>
+          <p className="list-title">
+            {this.props.listName}
+          </p>
           <Paper className={classes.root}>
             <Table>
               <caption>
